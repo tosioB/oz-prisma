@@ -1,0 +1,14 @@
+-- AlterTable
+ALTER TABLE "film_comment" ALTER COLUMN "created_at" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "film_post" ALTER COLUMN "created_at" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "mention" ALTER COLUMN "created_at" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "notification" ALTER COLUMN "create_at" SET DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "post_reaction" ALTER COLUMN "create_at" SET DEFAULT CURRENT_TIMESTAMP;
