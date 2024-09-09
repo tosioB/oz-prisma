@@ -134,25 +134,25 @@ model film_category {
 }
 
 model film_comment {
-  comment_id  Int        @id @default(autoincrement())
-  post_id     Int?
-  customer_id Int?
-  context     String?
-  created_at  DateTime?  @db.Timestamp(6)
-  updated_at  DateTime?  @db.Timestamp(6)
-  customer    customer?  @relation(fields: [customer_id], references: [customer_id], onDelete: NoAction, onUpdate: NoAction)
-  film_post   film_post? @relation(fields: [post_id], references: [post_id], onDelete: NoAction, onUpdate: NoAction)
+  comment_id  Int       @id @default(autoincrement())
+  post_id     Int
+  customer_id Int
+  context     String
+  created_at  DateTime  @db.Timestamp(6)
+  updated_at  DateTime  @db.Timestamp(6)
+  customer    customer  @relation(fields: [customer_id], references: [customer_id], onDelete: NoAction, onUpdate: NoAction)
+  film_post   film_post @relation(fields: [post_id], references: [post_id], onDelete: NoAction, onUpdate: NoAction)
   mention     mention[]
 }
 
 model film_post {
   post_id       Int             @id @default(autoincrement())
-  film_id       Int?
-  content       String?
-  created_at    DateTime?       @db.Timestamp(6)
-  updated_at    DateTime?       @db.Timestamp(6)
+  film_id       Int
+  content       String
+  created_at    DateTime        @db.Timestamp(6)
+  updated_at    DateTime        @db.Timestamp(6)
   film_comment  film_comment[]
-  film          film?           @relation(fields: [film_id], references: [film_id], onDelete: NoAction, onUpdate: NoAction)
+  film          film            @relation(fields: [film_id], references: [film_id], onDelete: NoAction, onUpdate: NoAction)
   post_reaction post_reaction[]
 }
 
@@ -178,24 +178,24 @@ model language {
 
 model mention {
   mention_id            Int           @id @default(autoincrement())
-  created_at            DateTime?     @db.Timestamp(6)
-  comment_id            Int?
-  mentioned_customer_id Int?
-  film_comment          film_comment? @relation(fields: [comment_id], references: [comment_id], onDelete: NoAction, onUpdate: NoAction)
-  customer              customer?     @relation(fields: [mentioned_customer_id], references: [customer_id], onDelete: NoAction, onUpdate: NoAction)
+  created_at            DateTime      @db.Timestamp(6)
+  comment_id            Int
+  mentioned_customer_id Int
+  film_comment          film_comment  @relation(fields: [comment_id], references: [comment_id], onDelete: NoAction, onUpdate: NoAction)
+  customer              customer      @relation(fields: [mentioned_customer_id], references: [customer_id], onDelete: NoAction, onUpdate: NoAction)
   notification          notification?
 }
 
 model notification {
-  notification_id Int       @id @default(autoincrement())
-  mentioner_id    Int?
-  mention_id      Int?      @unique
-  content         String?
-  create_at       DateTime? @db.Timestamp(6)
-  is_read         Boolean?
-  read_at         DateTime? @db.Timestamp(6)
-  customer        customer? @relation(fields: [mention_id], references: [customer_id], onDelete: NoAction, onUpdate: NoAction)
-  mention         mention?  @relation(fields: [mention_id], references: [mention_id], onDelete: NoAction, onUpdate: NoAction, map: "notification_mention_id_fkey1")
+  notification_id Int      @id @default(autoincrement())
+  mentioner_id    Int
+  mention_id      Int      @unique
+  content         String
+  create_at       DateTime @db.Timestamp(6)
+  is_read         Boolean
+  read_at         DateTime @db.Timestamp(6)
+  customer        customer @relation(fields: [mention_id], references: [customer_id], onDelete: NoAction, onUpdate: NoAction)
+  mention         mention  @relation(fields: [mention_id], references: [mention_id], onDelete: NoAction, onUpdate: NoAction, map: "notification_mention_id_fkey1")
 }
 
 /// This table is a partition table and requires additional setup for migrations. Visit https://pris.ly/d/partition-tables for more info.
@@ -211,13 +211,13 @@ model payment {
 }
 
 model post_reaction {
-  reaction_id   Int            @id @default(autoincrement())
-  reaction_type reaction_type?
-  post_id       Int?
-  customer_id   Int?
-  create_at     DateTime?      @db.Timestamp(6)
-  customer      customer?      @relation(fields: [customer_id], references: [customer_id], onDelete: NoAction, onUpdate: NoAction)
-  film_post     film_post?     @relation(fields: [post_id], references: [post_id], onDelete: NoAction, onUpdate: NoAction)
+  reaction_id   Int           @id @default(autoincrement())
+  reaction_type reaction_type
+  post_id       Int
+  customer_id   Int
+  create_at     DateTime      @db.Timestamp(6)
+  customer      customer      @relation(fields: [customer_id], references: [customer_id], onDelete: NoAction, onUpdate: NoAction)
+  film_post     film_post     @relation(fields: [post_id], references: [post_id], onDelete: NoAction, onUpdate: NoAction)
 
   @@unique([post_id, customer_id], map: "unique_post_customer")
 }
